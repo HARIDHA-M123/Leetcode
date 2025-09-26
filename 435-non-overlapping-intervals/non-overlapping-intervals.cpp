@@ -5,7 +5,7 @@ class Solution {
 public:
     int eraseOverlapIntervals(vector<vector<int>>& intervals) {
     sort(intervals.begin(),intervals.end(),cmp);
-    int removeCount=0,cet=INT_MIN;
+    int removeCount=0,cet=INT_MIN;//i[0]->start   i[1]->end
     for(auto i:intervals){
         if(i[0]>=cet)cet=i[1];
         else
