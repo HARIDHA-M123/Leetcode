@@ -1,4 +1,4 @@
-
+//best solution reduce time complexity
 class Solution {
 public:
     ListNode* reverseList(ListNode* head) {
