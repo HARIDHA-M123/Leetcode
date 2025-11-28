@@ -8,42 +8,37 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
-
-#include <queue>
-using namespace std;
-
 class Solution {
 public:
-    struct compare {
-        bool operator()(ListNode* a, ListNode* b) {
-            return a->val > b->val; // min-heap based on node value
-        }
-    };
-
-    ListNode* mergeKLists(vector<ListNode*>& lists) {
-        priority_queue<ListNode*, vector<ListNode*>, compare> pq;
-
-        // Push head of each list
-        for (auto node : lists) {
-            if (node) pq.push(node);
-        }
-
-        // Dummy node to start result list
-        ListNode dummy;
+   ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
+        ListNode dummy(0);
         ListNode* tail = &dummy;
 
-        while (!pq.empty()) {
-            ListNode* curr = pq.top();
-            pq.pop();
-
-            tail->next = curr;
-            tail = tail->next;
-
-            if (curr->next) {
-                pq.push(curr->next);
+        while (l1 && l2) {
+            if (l1->val < l2->val) {
+                tail->next = l1;
+                l1 = l1->next;
+            } else {
+                tail->next = l2;
+                l2 = l2->next;
             }
+            tail = tail->next;
         }
 
+        if (l1) tail->next = l1;
+        else tail->next = l2;
+
         return dummy.next;
+    }
+
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+
+        ListNode *head=NULL;
+        if(lists.size()==0) return NULL;
+        head=lists[0];
+        for(int i=1;i<lists.size();i++)
+            head=mergeTwoLists(head,lists[i]);
+        return head;
+        
     }
 };
